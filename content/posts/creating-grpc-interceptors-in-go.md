@@ -5,7 +5,7 @@ date:   2019-06-14
 tags: golang grpc middleware interceptors
 ---
 
-### Introduction
+# Introduction
 
 Just like when building HTTP APIs, sometimes you need middleware that applies to your HTTP handlers for things like
 request validation, authentication etc. In [gRPC](https://grpc.io/) this is no different. Methods for authentication
@@ -18,13 +18,13 @@ The key difference here is that in HTTP we create middleware for handlers (purel
 for both inbound calls on the server side and outbound calls on the client side. This post aims to outline how you can create simple gRPC interceptors
 that act as middleware for your clients and servers.
 
-### Interceptor Types
+# Interceptor Types
 
 In gRPC there are two kinds of interceptors, **unary** and **stream**. Unary interceptors handle single request/response RPC calls whereas stream interceptors handle RPC calls where streams
 of messages are written in either direction. You can get more in-depth details on the differences between them [here](https://grpc.io/docs/guides/concepts/#rpc-life-cycle). On top of this, you can
 create interceptors that apply to both servers and clients.
 
-#### Unary Client Interceptors
+## Unary Client Interceptors
 
 In situations where we have a simple call & response, we need to create a unary client interceptor. This is a function that matches
 the signature of `grpc.UnaryClientInterceptor` and looks like this:
@@ -48,7 +48,7 @@ This signature has a lot of parameters, so lets look at each one and what they'r
 With all of these, we get a lot of information about the call being made. This makes it quite straightforward to create things like [logging middleware](https://github.com/grpc-ecosystem/go-grpc-middleware/blob/master/logging/logrus/client_interceptors.go) that will write out
 RPC call information.
 
-#### Unary Server Interceptors
+## Unary Server Interceptors
 
 Server interceptors look fairly similar to the client, with the exception that they allow us to modify the response returned from
 the gRPC call. Here's the function signature, it's defined as `grpc.UnaryServerInterceptor`:
@@ -67,7 +67,7 @@ Like with the client, there's a few different params here:
 * `info *grpc.UnaryServerInfo` - Information on the gRPC server that is handling the request
 * `handler grpc.UnaryHandler` - The handler for the inbound request, you'll need to invoke this otherwise you won't be getting your response to the client.
 
-#### Stream Client Interceptors
+## Stream Client Interceptors
 
 Working with streams works pretty much the same, here's the signature of `grpc.StreamClientInterceptor`:
 
@@ -83,7 +83,7 @@ func Interceptor(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn
 * `method string` - The name of the gRPC method being called.
 * `streamer grpc.Streamer` - Called by the interceptor to create a stream.
 
-#### Stream Server Interceptors
+## Stream Server Interceptors
 
 Below is the signature of `grpc.StreamServerInterceptor`
 
@@ -98,7 +98,7 @@ func Interceptor(srv interface{}, stream grpc.ServerStream, info *grpc.StreamSer
 * `info *grpc.StreamServerInfo` - Various information about the streaming RPC on server side
 * `handler grpc.StreamHandler` - The handler called by gRPC server to complete the execution of a streaming RPC
 
-### Creating an interceptor
+# Creating an interceptor
 
 For this post, lets say we have a gRPC client and server that authenticate via a JWT token that we obtain via an HTTP API. If the provided
 JWT token is no longer valid, the server will return an appropriate status code that will be detected
@@ -228,7 +228,7 @@ func (jwt *JWTInterceptor) UnaryClientInterceptor(ctx context.Context, method st
 }
 ```
 
-### Testing an interceptor
+# Testing an interceptor
 
 Now that we've written the interceptor, we need some tests. It can be a little tricky asserting values within a context when your packages
 don't define the keys that are used. Luckily the `google.golang.org/grpc/metadata` contains methods we can use to get the information we need
@@ -245,7 +245,7 @@ you can take to pull the token out from the context and check its value.
 * If the token isn't what you expect or is blank, return `codes.Unauthenticated` using the `google.golang.org/grpc/codes` package.
 * Use a HTTP mock to catch the request for a token and handle it. (Either using the standard library or an HTTP mocking package like [gock](https://github.com/h2non/gock))
 
-### Using an interceptor
+# Using an interceptor
 
 With our interceptor written, we can apply it using the `grpc.With...` methods like so:
 
@@ -263,7 +263,7 @@ conn, err := grpc.Dial("localhost:5000", grpc.WithUnaryInterceptor(jwt.UnaryClie
 This works the same for servers as well. When you create your server you'll have the option on providing
 unary/stream server interceptors.
 
-### Links
+# Links
 
 * [https://grpc.io/](https://grpc.io/)
 * [https://grpc.io/docs/guides/concepts/#rpc-life-cycle](https://grpc.io/docs/guides/concepts/#rpc-life-cycle)

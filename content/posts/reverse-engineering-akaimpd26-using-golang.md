@@ -5,7 +5,7 @@ date:   2019-01-30
 tags: golang usb akai mpd26 reverse engineering
 ---
 
-### Introduction
+# Introduction
 
 The other day, I discovered [Google's gousb](https://github.com/google/gousb) package. A low level interface for interacting with USB devices in Golang. At the time of writing, it's fairly one-of-a-kind. I haven't seen many golang packages attempt to tackle interfacing with USB devices and was keen to give it a try.
 
@@ -25,13 +25,13 @@ I decided to set out some goals for how I'd like my interface to the sampler to 
 2. It should provide a way to read values from individual aspects of the sampler using channels
 3. It should abstract away as much of the nastiness of interfacing with USB devices as possible
 
-### Connecting to the USB interface
+# Connecting to the USB interface
 
 For honesty, I had never done any programming work related to USB devices before, so I didn't really know what I was getting myself in to. Luckily, the gousb library provides a really simple interface. However, it requires some background reading on how connections with USB devices work.
 
 The [godoc page](https://godoc.org/github.com/google/gousb) for the library has a pretty good explanation of how it works under the hood. I wish I'd read it first before trying to bruteforce my way in.
 
-#### Figuring out which USB device to use
+## Figuring out which USB device to use
 
 First challenge is figuring out which of the USB ports on the host machine is actually connected to the sampler. To do this, we need to know the product and vendor identifiers for the usb device.
 
@@ -71,7 +71,7 @@ func findMPD26(product, vendor uint16) func(desc *gousb.DeviceDesc) bool {
 
 Using this code, we get back an array of devices with one element, the sampler!
 
-### Reading from the USB device
+# Reading from the USB device
 
 When dealing with a USB device, we need to obtain three things: a configuration, an interface and an endpoint.
 
@@ -229,13 +229,13 @@ To start with, lets just print the contents of the byte array to `stdout` so tha
 [8, 144, 26, 0]    # Output when releasing a pad
 ```
 
-### Reverse engineering serial data
+# Reverse engineering serial data
 
 We're going to use the output we get reading the raw USB data to make some assumptions about which values mean what. Luckily, the values we're getting are MIDI. So any variance between 0-127 is usually a good candidate for the value of the control you're looking at. Based on the console output, it seems that the last byte in the array is always the MIDI value of the control.
 
 This means the first 3 bytes should indicate the control we're using. I've still yet to figure out what all bytes in the array represent, but there are consistent values for certain controls, so we can use these to update the respective state of a control in the library.
 
-#### Faders & Knobs
+## Faders & Knobs
 
 The faders and knobs were the easiest controls to get working. They only have a number to identify them and a value between 0 and 127. After playing with all of them, the first two bytes are consistently `[11, 176]`. We can use this information to create a method to identify if a message is for the value of a control:
 
@@ -263,7 +263,7 @@ func isKnob(data []byte) bool {
 }
 ```
 
-#### Pads
+## Pads
 
 The pads have a little more logic to them, but work the same way. The first byte determines whether or not the pad has been pressed or released, the second byte is always 144 and the third byte is a number between 26 and 51 that identifies the unique pad being pressed/released. Here's our method:
 
@@ -273,7 +273,7 @@ func isPad(data []byte) bool {
 }
 ```
 
-### Creating the Golang API
+# Creating the Golang API
 
 Now we need to expose this data in a nice way so that people can build things in Go using an MPD26. Earlier we saw code for reading the serial data, but we need a way to get that data out in a format that would make sense to someone looking directly at the sampler. We also want things to work asynchronously, waiting to read from a pad shouldn't block a read from a fader. 
 
@@ -426,7 +426,7 @@ func (mpd *MPD26) Knob(id int) <-chan int {
 
 With all these in place, we can now connect and read from the sampler. In future, I'd like to hook this up to an audio library like [beep](https://github.com/faiface/beep) in order to get some actual output. But for now, we've got a working interface with the sampler!
 
-### Links
+# Links
 
 * [https://github.com/google/gousb](https://github.com/google/gousb)
 * [http://www.akaipro.com/products/legacy/mpd-26](http://www.akaipro.com/products/legacy/mpd-26)

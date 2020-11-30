@@ -5,7 +5,7 @@ date:   2020-03-01
 tags: golang protobuf structure grpc
 ---
 
-### Introduction
+# Introduction
 
 In my current position at [Utility Warehouse](https://www.utilitywarehouse.co.uk/), my team keeps our go code for all 
 our services within a monorepo. This includes all our protocol buffer definitions that are used to generate client/service 
@@ -18,7 +18,7 @@ protocol buffers.
 You could also use the structure explained in this post to create a single repository that contains all proto definitions 
 for all services (or whatever else you use them for) and serve it as a [go module](https://blog.golang.org/using-go-modules). 
 
-### What are protocol buffers?
+# What are protocol buffers?
 
 Taken from [Google's documentation](https://developers.google.com/protocol-buffers)
 
@@ -32,7 +32,7 @@ the event-sourced aspects of our systems, where proto messages are sent over the
 [Apache Kafka](https://kafka.apache.org/) and [NATS](https://nats.io/). Which also allows systems that consume/produce
 events to always have the most up-to-date definitions.
 
-### The 'proto' directory
+# The 'proto' directory
 
 At the top level of our repository lives the `proto` directory. This is where all `.proto` files live, as well as 
 third-party definitions (such as those [provided by google](https://github.com/googleapis/googleapis/tree/master/google/type) 
@@ -62,7 +62,7 @@ Here's a full example of what this looks like:
     |           └── models.proto       # Shared domain objects
 ```
 
-### Writing protocol buffer definitions
+# Writing protocol buffer definitions
 
 Next, lets take a look at how we actually define our protocol buffers. There's nothing particularly out of the ordinary 
 here that you wouldn't see in most other definitions. The most important part is the `package` declaration. We make sure
@@ -85,7 +85,7 @@ option go_package = "github.com/utilitywarehouse/<repo>/proto/gen/go/partner/doc
 
 We're also using the [buf](https://buf.build/) tool in order to lint our files and check for breaking changes.
 
-### Generating code from protocol buffers
+# Generating code from protocol buffers
 
 Finally, we need to generate our code so we can use it in our go services. We commit and keep all our generated source 
 code within the repository along with the definitions. This means that when code is regenerated, all services that 
@@ -119,7 +119,7 @@ the proto definitions. For example, if [go-proto-validators](https://github.com/
 within a definition. We will also generate code using `--govalidators_out`. Rinse and repeat for some additional tooling 
 and some internal ones.
 
-### Generated package names
+# Generated package names
 
 If you're anal like myself, you may not like the go package names you get as a result of this. In the example above, you 
 end up with a package name of `partner_document_v1`, which isn't pretty to look at unless you alias it when importing it.
@@ -128,7 +128,7 @@ To solve this, you can specify `option go_package` in order to override the gene
 optional, but it allows us to have package names like `document` instead. You can read more about this option
 [here](https://developers.google.com/protocol-buffers/docs/reference/go-generated)
 
-### Links
+# Links
 
 * [https://www.utilitywarehouse.co.uk/](https://www.utilitywarehouse.co.uk/)
 * [https://blog.golang.org/using-go-modules](https://blog.golang.org/using-go-modules)

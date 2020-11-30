@@ -5,7 +5,7 @@ date:   2018-08-10
 tags: golang http debugging pprof memory leak
 ---
 
-### Introduction 
+# Introduction 
 
 I work as a software engineer at [OVO Energy](https://www.ovoenergy.com/) where my team are implementing the CRM solution used by customer services. We're currently building a new set of microservices to replace the existing services. One of our microservices is responsible for migrating data from the old system into the new one.
 
@@ -15,7 +15,7 @@ A few days after deploying a new version of the service, I opened the relevant m
 
 According to this graph, we have a memory leak somewhere. This is most likely due to an issue with the management of goroutines within the service. However, the service relies heavily on concurrency, so finding where the leak is might not be so easy. Luckily, goroutines are lightweight, allowing a reasonable amount of time to figure out where the leak is before it becomes a real/expensive problem. The two spikes on the 12pm marks are times when migrations occurred.
 
-### Background
+# Background
 
 Over the course of a few weeks I designed and implemented the service and hosted it in our [Kubernetes](https://kubernetes.io) cluster on [GCP](https://cloud.google.com/), ensuring that I added monitoring functionality in order to make it ready for production. This included an HTTP endpoint for health checks, log-based metrics and uptime checks using [Stackdriver](https://cloud.google.com/stackdriver/).
 
@@ -56,7 +56,7 @@ First thing I would note, using `runtime.NumGoroutine()` to see the number of ru
 
 On the day of the leak, I saw the number of goroutines exceed 100000 and keep rising steadily with each health check request. Below are the steps I took in debugging this issue.
 
-### Enabling pprof output via HTTP
+# Enabling pprof output via HTTP
 
 The `pprof` tool describes itself as "a tool for visualization and analysis of profiling data", you can view the GitHub repository for it [here](https://github.com/google/pprof). This tool allows us to obtain various metrics on the low-level operations of a Go program. For our purposes, it allows us to get detailed information on running goroutines. The only problem here is that `pprof` is a binary. This means we would have to run commands against the service in production for meaningful results. The application also runs within a [Docker](https://www.docker.com/) container based on a `scratch` image, which makes using the binary somewhat invasive. How then can we get the profiling data we need?
 
@@ -80,7 +80,7 @@ router.Handle("/debug/pprof/block", pprof.Handler("block"))
 
 Once I had added these handlers, I span up a local instance of the service and navigated to the `/debug/pprof/goroutine` endpoint.
 
-### Understanding pprof output
+# Understanding pprof output
 
 The response I got from `/debug/pprof/goroutine` was fairly easy to interpret, here's a sample that shows the routines span up
 by the Kafka consumer.
@@ -195,13 +195,13 @@ After implementing these changes and deploying it to production, the memory usag
 
 ![Memory usage graph](/images/2018-08-08-debugging-memory-leaks-using-pprof/2.png)
 
-### Lessons learned
+# Lessons learned
 
 * Monitor your number of active goroutines, especially in services that rely on concurrency patterns
 * Add functionality to your services to expose profiling data using `pprof`
 * Set reasonable configuration values for your HTTP clients and requests
 
-### Links
+# Links
 
 * [https://www.ovoenergy.com/](https://www.ovoenergy.com/)
 * [https://kubernetes.io](https://kubernetes.io)

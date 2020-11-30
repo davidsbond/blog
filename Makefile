@@ -6,3 +6,6 @@ build:
 
 deploy:
 	hugo deploy
+
+new-post:
+	hugo new posts/$(POST_NAME).md
