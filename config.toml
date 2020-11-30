@@ -1,0 +1,52 @@
+baseURL = "https://blog.dsb.dev"
+languageCode = "en-gb"
+title = "David Bond - Software Engineer"
+theme = "cactus"
+copyright = "David Bond"
+googleAnalytics = "UA-46697487-4"
+googleAnalyticsAsync = true
+
+[params]
+	description = "Blog posts about the Go ecosystem, tools & packages. Right now I break things at Utility Warehouse."
+	mainSection = "posts"
+	rss = true
+	colortheme = "dark"
+	tagsOverview = false
+	logo = "images/me.jpg"
+	postsOnHomePage = 10
+
+[[params.social]]
+	name = "github"
+	link = "https://github.com/davidsbond"
+
+[[params.social]]
+        name = "linkedin"
+        link = "https://www.linkedin.com/in/davidsbond"
+
+[[menu.main]]
+	name = "Home"
+	url = "/"
+	weight = 1
+
+[[menu.main]]
+	name = "Posts"
+	url = "/posts"
+	weight = 2
+
+[[deployment.targets]]
+	name = "blog"
+	URL = "gs://dsb-dev-blog"
+
+[[deployment.matchers]]
+	pattern = "^.+\\.(js|css|svg|ttf)$"
+	cacheControl = "max-age=31536000, no-transform, public"
+	gzip = true
+
+[[deployment.matchers]]
+	pattern = "^.+\\.(png|jpg)$"
+	cacheControl = "max-age=31536000, no-transform, public"
+	gzip = false
+
+[[deployment.matchers]]
+	pattern = "^.+\\.(html|xml|json)$"
+	gzip = true
