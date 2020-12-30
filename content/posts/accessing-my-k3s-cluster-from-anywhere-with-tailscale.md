@@ -8,7 +8,7 @@ tags: k3s tailscale cloudflare terraform traefik cert-manager
 ## Introduction
 
 At home, I run my own [k3s cluster](https://github.com/davidsbond/homelab) on 4 Raspberry Pi 4Bs. In order to access the
-services I run from anywhere without exposing my cluster to the open internet I use [Tailscale](https://Tailscale.com/), 
+services I run from anywhere without exposing my cluster to the open internet I use [Tailscale](https://tailscale.com/), 
 a service designed to make a private VPN really easy to set up. I run a bunch of services, including (but not 
 limited to) a password manager, Google Photos alternative, finance management tools etc.
 
@@ -28,7 +28,7 @@ has a full overview of the setup you can view for yourself.
 ### Installing Tailscale
 
 Each node in the cluster is running [Ubuntu for Raspberry Pi](https://ubuntu.com/raspberry-pi), so installing Tailscale is
-as simple as following the [instructions for ubuntu](https://Tailscale.com/kb/1039/install-ubuntu-2004).
+as simple as following the [instructions for ubuntu](https://tailscale.com/kb/1039/install-ubuntu-2004).
 
 1. Add Tailscale’s package signing key and repository
 
@@ -219,11 +219,11 @@ that I own.
 ### Links
 
 * [https://github.com/davidsbond/homelab](https://github.com/davidsbond/homelab)
-* [https://Tailscale.com/](https://Tailscale.com/)
+* [https://tailscale.com/](https://tailscale.com/)
 * [https://k3s.io](https://k3s.io)
 * [https://www.raspberrypi.org/products/raspberry-pi-4-model-b/](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/)
 * [https://ubuntu.com/raspberry-pi](https://ubuntu.com/raspberry-pi)
-* [https://Tailscale.com/kb/1039/install-ubuntu-2004](https://Tailscale.com/kb/1039/install-ubuntu-2004)
+* [https://tailscale.com/kb/1039/install-ubuntu-2004](https://tailscale.com/kb/1039/install-ubuntu-2004)
 * [https://github.com/tmux/tmux](https://github.com/tmux/tmux)
 * [https://rancher.com/docs/k3s/latest/en/quick-start/](https://rancher.com/docs/k3s/latest/en/quick-start/)
 * [https://traefik.io/](https://traefik.io/)
