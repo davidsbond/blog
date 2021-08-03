@@ -1,11 +1,17 @@
 ---
 layout: post
-title:  "Golang: Implementing kafka consumers using sarama-cluster"
+title:  "Go: Implementing kafka consumers using sarama-cluster"
 date:   2018-08-22
-tags: golang kafka sarama cluster sarama-cluster tutorial
+tags: 
+    - golang 
+    - kafka 
+    - sarama 
+    - cluster 
+    - sarama-cluster 
+    - tutorial
 ---
 
-### Introduction
+## Introduction
 
 Nowadays it seems as though more and more companies are using event-based architectures to provide communication between services across various domains. [Confluent](http://confluent.io/) maintain a [huge list](https://cwiki.apache.org/confluence/display/KAFKA/Powered+By) of companies actively using [Apache Kafka](https://kafka.apache.org/), a high performance messaging system and the subject of this post.
 
@@ -17,7 +23,7 @@ Kafka events are divided into "partitions". These are parallel event streams tha
 
 Consumers can then form "groups", where each consumer reads one or more unique partitions to spread the consumption of a topic across multiple consumers. This is especially useful when running replicated services and can increase event throughput.
 
-### Implementing a Kafka consumer
+## Implementing a Kafka consumer
 
 There aren't a huge number of viable options when it comes to implementing a Kafka consumer in Go. This tutorial focuses on [sarama-cluster](https://github.com/bsm/sarama-cluster), a balanced consumer implementation built on top the existing [sarama](https://github.com/shopify/sarama) client library by [Shopify](https://www.shopify.com).
 
@@ -28,7 +34,7 @@ The library has a concise API that makes getting started fairly simple. The firs
 config := cluster.NewConfig()
 ```
 
-#### Authentication
+### Authentication
 
 If you're sensible, the Kafka instance you're connecting to will have some form of authentication. The `sarama-cluster` library supports both TLS and SASL authentication methods.
 
@@ -83,7 +89,7 @@ config.SASL.Password = "password"
 config.SASL.Enable = true
 ```
 
-#### Implementing the consumer
+### Implementing the consumer
 
 Now that we've created a configuration with our authentication method of choice, we can create a consumer that will allow us to handle events for specified topics. You're going to need to know the addresses of your Kafka brokers, the name of your consumer group and each topic you wish to consume:
 
@@ -136,7 +142,7 @@ for partition := range consumer.Partitions() {
 
 The `ConsumerModePartitions` way of doing things will require you to code more oversight into your consumer. For one, you're going to need to gracefully handle the situation where the partition closes in a rebalance situation. These will occur when adding new consumers to the group. You're also going to need to manually call the `partition.Close()` method when you're done consuming.
 
-### Handling errors & rebalances
+## Handling errors & rebalances
 
 Should you add more consumers to the group, the existing ones will experience a rebalance. This is where the assignment of partitions to each consumer changes for an optimal spread across consumers. The `consumer` instance we've created already exposes a `Notifications()` channel from which we can log/react to these changes. 
 
@@ -172,7 +178,7 @@ config.Consumer.Return.Errors = true
 config.Group.Return.Notifications = true
 ```
 
-### Committing offsets
+## Committing offsets
 
 The last step in implementing the consumer is to commit our offsets. In short, we're telling Kafka that we have finished processing a message and we do not want to consume it again. This should be done once you no longer require the message data for any processing. If you commit offsets too early, you may lose the ability to easily reconsume the event if something goes wrong. Let's say you're writing the event contents straight to a database, don't commit offsets before you've written the contents of the event to your database successfully. That way, should the database operation fail, you can just reconsume the event to try again.
 
@@ -198,7 +204,7 @@ for msg := range consumer.Messages() {
 
 This is everything you need in order to implement a simple Kafka consumer group. The `sarama-cluster` library provides a lot more configuration options to suit your needs based on how you maintain your Kafka brokers. I'd recommend browsing through all the config values yourself to determine if you need to tweak any.
 
-### Links
+## Links
 
 * [http://confluent.io/](http://confluent.io/)
 * [https://cwiki.apache.org/confluence/display/KAFKA/Powered+By](https://cwiki.apache.org/confluence/display/KAFKA/Powered+By)
