@@ -1,11 +1,16 @@
 ---
 layout: post
-title:  "Golang: Creating distributed systems using memberlist"
+title:  "Go: Creating distributed systems using memberlist"
 date:   2019-04-14
-tags: golang hashicorp memberlist clusters
+tags:
+    - golang 
+    - hashicorp 
+    - memberlist 
+    - clusters
+    - tutorial
 ---
 
-### Introduction
+## Introduction
 
 As scaling requirements have increased steadily throughout enterprise software the need to create distributed systems has increased. Leading to a variety of incredibly scalable products that rely on a distributed architecture. Wikipedia describes a distributed system as:
 
@@ -29,7 +34,7 @@ This is a loose description of how an implementation of a gossip protocol may wo
 
 With this package, we're able to create a self-aware cluster of nodes that can perform whatever tasks we see fit.
 
-### Creating a simple cluster
+## Creating a simple cluster
 
 To start, we'll need to define our configuration. The package contains some methods for generating default configuration based on the environment you intend to run your cluster in. Here they are:
 
@@ -106,7 +111,7 @@ if err := ml.Leave(time.Second * 5); err != nil {
 }
 ```
 
-### Communication between members
+## Communication between members
 
 Now that we can join and leave the cluster, we can use the member list to perform distributed operations.
 
@@ -168,7 +173,7 @@ Hopefully, this post has outlined how you can use the `memberlist` package to im
 
 In the example above, we can't guarantee that our message will be propagated to every single node if there is a lot of traffic in terms of nodes joining/leaving. Ideally, new members should join in a controlled manner and only when necessary.
 
-### Links
+## Links
 
 * [https://en.wikipedia.org/wiki/Distributed_computing](https://en.wikipedia.org/wiki/Distributed_computing)
 * [https://github.com/hashicorp/memberlist](https://github.com/hashicorp/memberlist)

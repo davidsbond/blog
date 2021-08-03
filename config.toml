@@ -1,19 +1,22 @@
 baseURL = "https://blog.dsb.dev"
 languageCode = "en-gb"
-title = "David Bond - Software Engineer"
+title = "David Bond - Dishevelled Software Engineer"
 theme = "cactus"
 copyright = "David Bond"
 googleAnalytics = "UA-46697487-4"
 googleAnalyticsAsync = true
+relativeURLs = true
+canonifyURLs = true
 
 [params]
-	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at Jetstack."
+	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at [Jetstack](https://jetstack.io)."
 	mainSection = "posts"
 	rss = true
-	colortheme = "dark"
-	tagsOverview = false
+	colortheme = "white"
 	logo = "images/me.jpg"
-	postsOnHomePage = 10
+	postsOnHomePage = 20
+	showProjectsList = true
+	projectsUrl = "https://github.com/davidsbond"
 
 [[params.social]]
 	name = "github"
@@ -22,6 +25,10 @@ googleAnalyticsAsync = true
 [[params.social]]
     name = "linkedin"
     link = "https://www.linkedin.com/in/davidsbond"
+
+[[params.social]]
+    name = "email"
+    link = "davidsbond93@gmail.com"
 
 [[menu.main]]
 	name = "Home"
@@ -32,6 +39,11 @@ googleAnalyticsAsync = true
 	name = "Posts"
 	url = "/posts"
 	weight = 2
+
+[[menu.main]]
+	name = "Tags"
+	url = "/tags"
+	weight = 3
 
 [[deployment.targets]]
 	name = "blog"

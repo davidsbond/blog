@@ -1,8 +1,15 @@
 ---
 layout: post
-title: "Networking: Accessing my k3s cluster securely from anywhere with Tailscale"
+title: "Homelab: Accessing my k3s cluster securely from anywhere with Tailscale"
 date: 2020-12-30
-tags: k3s tailscale cloudflare terraform traefik cert-manager
+tags:
+    - k3s
+    - kubernetes
+    - tailscale 
+    - cloudflare 
+    - terraform 
+    - traefik 
+    - cert-manager
 ---
 
 ## Introduction
