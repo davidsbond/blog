@@ -7,7 +7,7 @@ googleAnalytics = "UA-46697487-4"
 googleAnalyticsAsync = true
 
 [params]
-	description = "Blog posts about the Go ecosystem, tools & packages. Right now I break things at Utility Warehouse."
+	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at Jetstack."
 	mainSection = "posts"
 	rss = true
 	colortheme = "dark"
@@ -20,8 +20,8 @@ googleAnalyticsAsync = true
 	link = "https://github.com/davidsbond"
 
 [[params.social]]
-        name = "linkedin"
-        link = "https://www.linkedin.com/in/davidsbond"
+    name = "linkedin"
+    link = "https://www.linkedin.com/in/davidsbond"
 
 [[menu.main]]
 	name = "Home"
