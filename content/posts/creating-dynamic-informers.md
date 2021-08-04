@@ -2,7 +2,6 @@
 layout: post
 title: "Go: Creating Dynamic Kubernetes Informers"
 date: 2021-08-04
-draft: false
 tags: 
     - golang 
     - kubernetes 
