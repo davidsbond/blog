@@ -1,3 +1,4 @@
+baseURL = "https://blog.dsb.dev"
 languageCode = "en-gb"
 title = "David Bond - Dishevelled Software Engineer"
 theme = "cactus"
