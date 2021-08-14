@@ -1,4 +1,3 @@
-baseURL = "https://blog.dsb.dev"
 languageCode = "en-gb"
 title = "David Bond - Dishevelled Software Engineer"
 theme = "cactus"
@@ -6,7 +5,6 @@ copyright = "David Bond"
 googleAnalytics = "UA-46697487-4"
 googleAnalyticsAsync = true
 relativeURLs = true
-canonifyURLs = false
 
 [params]
 	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at [Jetstack](https://jetstack.io)."
