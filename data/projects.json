@@ -1,14 +1,14 @@
 {
   "list": [
     {
-      "name": "Kollect",
-      "url":"https://github.com/davidsbond/kollect",
-      "desc":"Monitor your Kubernetes clusters via your favourite event bus"
-    },
-    {
       "name": "Tailscale Terraform Provider",
       "url": "https://github.com/davidsbond/terraform-provider-tailscale",
       "desc": "Terraform provider implementation for interacting with the Tailscale API"
+    },
+    {
+      "name": "Homelab",
+      "url": "https://github.com/davidsbond/homelab",
+      "desc": "Monorepo for my personal homelab"
     }
   ]
 }
