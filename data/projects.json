@@ -2,12 +2,22 @@
   "list": [
     {
       "name": "Tailscale Terraform Provider",
-      "url": "https://github.com/davidsbond/terraform-provider-tailscale",
+      "url": "https://github.com/tailscale/terraform-provider-tailscale",
       "desc": "Terraform provider implementation for interacting with the Tailscale API"
     },
     {
-      "name": "Homelab",
-      "url": "https://github.com/davidsbond/homelab",
+      "name": "Tailscale Go Client",
+      "url": "https://github.com/tailscale/tailscale-client-go",
+      "desc": "A go client for the Tailscale HTTP API"
+    },
+    {
+      "name": "Tailscale Vault Plugin",
+      "url": "https://github.com/davidsbond/vault-plugin-tailscale",
+      "desc": "A HashiCorp Vault plugin for managing Tailscale authentication keys"
+    },
+    {
+      "name": "Homad",
+      "url": "https://github.com/davidsbond/homad",
       "desc": "Monorepo for my personal homelab"
     }
   ]

@@ -3,6 +3,3 @@ serve:
 
 build:
 	hugo
-
-deploy:
-	hugo deploy

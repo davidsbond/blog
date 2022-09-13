@@ -8,7 +8,7 @@ googleAnalyticsAsync = true
 relativeURLs = true
 
 [params]
-	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at [Jetstack](https://jetstack.io)."
+	description = "Blog posts about the Go ecosystem, tools & packages. Right now I delete production at [HashiCorp](https://hashicorp.com). Previously, I've worked at [Jetstack](https://jetstack.io), [Utility Warehouse](https://uw.co.uk/) and [OVO Energy](https://www.ovoenergy.com/)."
 	mainSection = "posts"
 	rss = true
 	colortheme = "white"
@@ -38,15 +38,6 @@ relativeURLs = true
 	name = "Posts"
 	url = "/posts"
 	weight = 2
-
-[[menu.main]]
-	name = "Tags"
-	url = "/tags"
-	weight = 3
-
-[[deployment.targets]]
-	name = "blog"
-	URL = "gs://dsb-dev-blog"
 
 [[deployment.matchers]]
 	pattern = "^.+\\.(js|css|svg|ttf)$"
